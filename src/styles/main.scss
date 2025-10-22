@@ -241,3 +241,35 @@ body.white-bg {
     right: 4rem;
   }
 }
+
+
+
+.text-content {
+  .logo-badge {
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;  // Smooth hover
+
+    canvas {
+      display: block;
+      border-radius: 8px;
+    }
+
+    &:hover {
+      transform: scale(1.05);  // Gentle zoom
+      box-shadow: 0 4px 16px rgba(100, 108, 255, 0.3);  // Blue glow tie-in
+    }
+  }
+
+  body.white-bg & {
+    .logo-badge {
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+
+      &:hover {
+        box-shadow: 0 4px 16px rgba(100, 108, 255, 0.2);
+      }
+    }
+  }
+}
