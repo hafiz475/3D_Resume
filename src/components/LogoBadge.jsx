@@ -1,4 +1,4 @@
-// components/LogoBadge.jsx (Debug Mode + Smarter Scaling)
+// components/LogoBadge.jsx (Matched Global Brightness)
 import React, { useEffect, useMemo } from "react";
 import * as THREE from "three";
 import { useLoader } from "@react-three/fiber";
@@ -12,45 +12,42 @@ export default function LogoBadge({ modelUrl }) {
     const bbox = new THREE.Box3().setFromObject(root);
     const center = new THREE.Vector3();
     bbox.getCenter(center);
-    root.position.sub(center);  // Center
+    root.position.sub(center);
 
     const size = new THREE.Vector3();
     bbox.getSize(size);
-    console.log(`Logo ${modelUrl} BBox:`, { x: size.x, y: size.y, z: size.z });  // 👀 DEBUG: Check these!
+    // console.log... (remove these debug lines now)
 
-    // Smarter scale: Use max of X/Y (width/height) for flat logos, ignore thin Z
-    const visibleMax = Math.max(size.x, size.y);  // Skip Z if it's the thin dim
-    let scale = 4.0 / visibleMax;  // Base 4.0: Bigger starting point
-    scale = Math.max(scale, 2.5);  // Min scale: No tinier than this
+    const visibleMax = Math.max(size.x, size.y);
+    let scale = 5.0 / visibleMax;
+    scale = Math.max(scale, 3.0);
 
     root.scale.setScalar(scale);
-    console.log(`Applied scale: ${scale}`);  // 👀 DEBUG
 
     root.traverse((n) => {
       if (n.isMesh) {
         n.castShadow = false;
         n.receiveShadow = false;
         if (n.material) {
-          n.material.emissiveIntensity = 0.2;  // Glow up
+          n.material.emissiveIntensity = 0.6; // UP: Matches Timeline glow
+          if (n.material.roughness !== undefined) {
+            n.material.roughness = 0.1; // NEW: Extra shiny for logos
+          }
         }
       }
     });
 
-    // Rotation roulette: Try these one-by-one based on console dims
-    // If Z is tiny (thin), rotate to show XY face
-    root.rotation.y = 0;  // Start neutral
+    root.rotation.y = 0;
     root.rotation.x = 0;
     root.rotation.z = 0;
-    // UNCOMMENT ONE LINE BELOW PER LOGO (test in browser):
-    // root.rotation.y = Math.PI / 2;  // 90° Y: If side-profile
-    // root.rotation.x = Math.PI / 2;  // 90° X: If upside-down
-    // root.rotation.z = Math.PI / 2;  // 90° Z: If twisted
   }, [root]);
 
   return (
     <group>
-      <ambientLight intensity={1.0} />  {/* Max brightness */}
-      <directionalLight position={[5, 5, 3]} intensity={2.0} />  {/* Harsh light to reveal edges */}
+      <ambientLight intensity={1.8} /> // UP: Total flood
+      <hemisphereLight args={["#ffffff", "#444444", 2.0]} /> // UP: Max evenness
+      <directionalLight position={[5, 5, 3]} intensity={5.0} /> // UP: Blinding
+      shine
       <primitive object={root} />
     </group>
   );

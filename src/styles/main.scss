@@ -76,10 +76,10 @@ body {
 .canvas-container {
   width: 80%;
   height: 60vh;
-  border-radius: 8px;
+  border-radius: 0;  // ✅ Removed: No rounded "border"
   overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-  background-color: rgba(0, 0, 0, 0.2);
+  box-shadow: none;  // ✅ Removed: No shadow/border effect
+  background-color: transparent;  // Keeps clean load
   margin: 0 auto;
 }
 
@@ -247,29 +247,34 @@ body.white-bg {
 .text-content {
   .logo-badge {
     margin-bottom: 1rem;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;  // Smooth hover
+    // ✅ ALL GONE: No radius, border, shadow, hover, or transition
+    overflow: hidden;  // Keeps clipping clean
 
     canvas {
       display: block;
-      border-radius: 8px;
+      // ✅ ALL GONE: No radius, border, or bg
+      background: transparent;
     }
 
-    &:hover {
-      transform: scale(1.05);  // Gentle zoom
-      box-shadow: 0 4px 16px rgba(100, 108, 255, 0.3);  // Blue glow tie-in
-    }
+    // ✅ REMOVED: No &:hover at all
   }
 
-  body.white-bg & {
-    .logo-badge {
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
 
-      &:hover {
-        box-shadow: 0 4px 16px rgba(100, 108, 255, 0.2);
-      }
-    }
+// Responsive: Also nuke radius/shadow in media queries if any (yours are clean)
+@media (min-width: 768px) {
+  .canvas-container {
+    width: 40%;
+    height: 80vh;
+    border-radius: 0;  // Consistent
+    box-shadow: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  .canvas-container {
+    height: 85vh;
+    border-radius: 0;
+    box-shadow: none;
   }
 }

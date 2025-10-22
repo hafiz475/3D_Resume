@@ -163,7 +163,15 @@ export default function App() {
               <div className="section-content">
                 <div className="canvas-container">
                   {/* Main human model Canvas—unchanged */}
-                  <Canvas shadows camera={{ position: [0, 0, 4], fov: 50 }}>
+                  <Canvas
+                    gl={{ alpha: true, antialias: true }}
+                    shadows
+                    camera={{ position: [0, 0, 4], fov: 50 }}
+                    style={{
+                      border: "none", // ✅ Explicit no border
+                      background: "transparent", // ✅ Clean
+                    }}
+                  >
                     <Suspense fallback={null}>
                       {index === 0 ? (
                         <>
@@ -210,15 +218,20 @@ export default function App() {
                   {/* New: Logo badge above title */}
                   <div className="logo-badge">
                     <Canvas
-                      camera={{ position: [0, 0, 3], fov: 75 }} // Closer camera: 3 instead of 5 for tighter crop
+                      gl={{ alpha: true, antialias: true }}
+                      camera={{ position: [0, 0, 2.5], fov: 75 }} // Tight zoom kept
                       style={{
-                        height: "100px", // Up from 80px
-                        width: "150px", // Up from 120px
+                        height: "100px",
+                        width: "150px",
                         margin: "0 auto 1rem",
-                        borderRadius: "8px",
+                        borderRadius: "0",
                         overflow: "hidden",
+                        background: "transparent",
+                        border: "none",
+                        outline: "none", // ✅ Extra: No focus outlines on interact
                       }}
                     >
+                      <color attach="background" args={["transparent"]} />
                       <Suspense
                         fallback={
                           <mesh>
