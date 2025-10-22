@@ -218,20 +218,19 @@ export default function App() {
                   {/* New: Logo badge above title */}
                   <div className="logo-badge">
                     <Canvas
-                      gl={{ alpha: true, antialias: true }}
-                      camera={{ position: [0, 0, 2.5], fov: 75 }} // Tight zoom kept
+                      gl={{ alpha: true, antialias: true }} // Keeps transparency enabled
+                      camera={{ position: [0, 0, 2.5], fov: 75 }}
                       style={{
                         height: "100px",
                         width: "150px",
                         margin: "0 auto 1rem",
                         borderRadius: "0",
                         overflow: "hidden",
-                        background: "transparent",
+                        background: "transparent", // DOM canvas stays see-through
                         border: "none",
-                        outline: "none", // ✅ Extra: No focus outlines on interact
+                        outline: "none",
                       }}
                     >
-                      <color attach="background" args={["transparent"]} />
                       <Suspense
                         fallback={
                           <mesh>
