@@ -1,0 +1,64 @@
+:root, body, #root {
+  height: 100%;
+  margin: 0;
+  font-family: system-ui, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  background: #f9fbff;
+}
+
+.nav {
+  padding: 12px;
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  background: #eef4ff;
+  border-bottom: 1px solid #dbe5ff;
+}
+
+.nav-button {
+  padding: 8px 12px;
+  border: 1px solid #b9ccff;
+  background: white;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 120ms ease;
+}
+.nav-button:hover { transform: translateY(-1px); }
+.nav-button.active {
+  background: #dbe5ff;
+  border-color: #9db7ff;
+}
+
+.main {
+  display: grid;
+  grid-template-columns: minmax(300px, 1fr) 420px;
+  gap: 16px;
+  padding: 16px;
+}
+@media (max-width: 900px) {
+  .main { grid-template-columns: 1fr; }
+}
+
+.canvas-container {
+  height: 60vh;          /* ensure Canvas is visible */
+  min-height: 420px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #e6ecff;
+  background: #eaf4ff;   /* splash while model loads */
+}
+
+.content {
+  background: white;
+  border: 1px solid #e6ecff;
+  border-radius: 12px;
+  padding: 20px;
+}
+.content h1 {
+  margin: 0 0 8px;
+}

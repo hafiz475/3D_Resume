@@ -1,0 +1,243 @@
+// Variables
+$primary-color: #ffffff;
+$secondary-color: rgba(255, 255, 255, 0.8);
+$text-color: #ffffff;
+$timeline-color: rgba(255, 255, 255, 0.5);
+$timeline-active-color: #ffffff;
+
+$dark-text-color: #213547; // For white backgrounds
+
+// Background colors (now on body)
+body.three-black {
+  background: #000;
+}
+
+body.white-bg {
+  background: #ffffff;
+}
+
+// Base styles
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #root, .app {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: $text-color;
+  line-height: 1.6;
+  transition: background 0.5s ease; // Smooth bg changes
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden; // Prevent any outer scroll
+}
+
+.sections-wrapper {
+  flex: 1;
+  height: 100vh;
+  overflow: hidden; // Fixed viewport, no scroll
+  position: relative;
+}
+
+.sections-container {
+  display: flex;
+  flex-direction: column;
+  height: 300vh; // For 3 sections (100vh each)
+  // Transition handled inline for flexibility
+}
+
+.section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  flex-shrink: 0; // Prevent compression
+}
+
+.section-content {
+  display: flex;
+  flex-direction: column;
+  max-width: 1400px;
+  width: 100%;
+}
+
+.canvas-container {
+  width: 80%;
+  height: 60vh;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.2);
+  margin: 0 auto;
+}
+
+.text-content {
+  padding: 2rem 1rem;
+  text-align: center;
+  
+  h2 {
+    color: $primary-color;
+    margin-bottom: 1rem;
+    font-size: 1.8rem;
+  }
+  
+  p {
+    color: $secondary-color;
+    margin-bottom: 0;
+    line-height: 1.6;
+    font-size: 1.1rem;
+  }
+}
+
+// Color adjustments for white-bg (applied via body class)
+body.white-bg {
+  color: $dark-text-color;
+
+  .text-content {
+    h2 {
+      color: $dark-text-color;
+    }
+    
+    p {
+      color: rgba(33, 53, 71, 0.87);
+    }
+  }
+
+  .timeline-dot {
+    background: rgba(0, 0, 0, 0.5);
+    
+    &.active {
+      background: #000000;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+    }
+  }
+
+  .timeline-year {
+    color: rgba(0, 0, 0, 0.8);
+  }
+
+  .timeline-line {
+    background: rgba(0, 0, 0, 0.5);
+  }
+}
+
+.timeline-indicator {
+  position: fixed;
+  top: 50%;
+  right: 2rem;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  padding: 1rem 0;
+}
+
+.timeline-line {
+  position: absolute;
+  width: 2px;
+  height: 100%;
+  background: $timeline-color;
+  z-index: 1;
+}
+
+.timeline-dot {
+  position: relative;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: $timeline-color;
+  margin: 2rem 0;
+  cursor: pointer;
+  z-index: 2;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: scale(1.2);
+  }
+  
+  &.active {
+    background: $timeline-active-color;
+    transform: scale(1.3);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+  }
+}
+
+.timeline-year {
+  position: absolute;
+  left: -40px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: $secondary-color;
+  font-size: 0.9rem;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  
+  .timeline-dot.active & {
+    opacity: 1;
+  }
+}
+
+// Responsive
+@media (min-width: 768px) {
+  .section-content {
+    flex-direction: row;
+    align-items: center;
+    gap: 3rem;
+  }
+  
+  .canvas-container {
+    width: 40%;
+    height: 80vh;
+  }
+  
+  .text-content {
+    width: 60%;
+    padding: 0;
+    text-align: left;
+    
+    h2 {
+      font-size: 2rem;
+    }
+    
+    p {
+      font-size: 1.2rem;
+    }
+  }
+  
+  .timeline-dot {
+    margin: 3rem 0;
+  }
+  
+  .timeline-indicator {
+    right: 3rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .canvas-container {
+    height: 85vh;
+  }
+  
+  .timeline-dot {
+    margin: 4rem 0;
+  }
+  
+  .timeline-indicator {
+    right: 4rem;
+  }
+}
