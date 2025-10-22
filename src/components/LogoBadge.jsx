@@ -1,4 +1,4 @@
-// components/LogoBadge.jsx (Matched Global Brightness)
+// components/LogoBadge.jsx (Glowing Edges & Self-Light)
 import React, { useEffect, useMemo } from "react";
 import * as THREE from "three";
 import { useLoader } from "@react-three/fiber";
@@ -16,7 +16,6 @@ export default function LogoBadge({ modelUrl }) {
 
     const size = new THREE.Vector3();
     bbox.getSize(size);
-    // console.log... (remove these debug lines now)
 
     const visibleMax = Math.max(size.x, size.y);
     let scale = 5.0 / visibleMax;
@@ -29,10 +28,12 @@ export default function LogoBadge({ modelUrl }) {
         n.castShadow = false;
         n.receiveShadow = false;
         if (n.material) {
-          n.material.emissiveIntensity = 0.6; // UP: Matches Timeline glow
+          n.material.emissiveIntensity = 1.0;  // UP: Full self-glow—makes it "lit from inside"
           if (n.material.roughness !== undefined) {
-            n.material.roughness = 0.1; // NEW: Extra shiny for logos
+            n.material.roughness = 0.05;  // DOWN: Mirror-shiny for light bounce
           }
+          // Optional: Tint emission blue-ish for "tech" vibe (comment if unwanted)
+          // n.material.emissive = new THREE.Color(0x646cff).multiplyScalar(0.5);
         }
       }
     });
@@ -44,10 +45,18 @@ export default function LogoBadge({ modelUrl }) {
 
   return (
     <group>
-      <ambientLight intensity={1.8} /> // UP: Total flood
-      <hemisphereLight args={["#ffffff", "#444444", 2.0]} /> // UP: Max evenness
-      <directionalLight position={[5, 5, 3]} intensity={5.0} /> // UP: Blinding
-      shine
+      <ambientLight intensity={1.8} />
+      <hemisphereLight args={['#ffffff', '#444444', 2.0]} />
+      <directionalLight position={[5, 5, 3]} intensity={5.0} />
+      
+      {/* NEW: Rim glow—soft point light offset for edge highlight */}
+      <pointLight 
+        position={[2, 0, 2]}  // Offset to one side for subtle wrap-around
+        intensity={2.5}      // Gentle: Not blinding
+        color="#646cff"      // Blue tint to match your theme
+        distance={3}         // Fades naturally
+      />
+      
       <primitive object={root} />
     </group>
   );
