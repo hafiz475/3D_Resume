@@ -1,4 +1,6 @@
-:root, body, #root {
+:root,
+body,
+#root {
   height: 100%;
   margin: 0;
   font-family: system-ui, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
@@ -28,7 +30,11 @@
   cursor: pointer;
   transition: transform 120ms ease;
 }
-.nav-button:hover { transform: translateY(-1px); }
+
+.nav-button:hover {
+  transform: translateY(-1px);
+}
+
 .nav-button.active {
   background: #dbe5ff;
   border-color: #9db7ff;
@@ -40,17 +46,22 @@
   gap: 16px;
   padding: 16px;
 }
+
 @media (max-width: 900px) {
-  .main { grid-template-columns: 1fr; }
+  .main {
+    grid-template-columns: 1fr;
+  }
 }
 
 .canvas-container {
-  height: 60vh;          /* ensure Canvas is visible */
+  height: 60vh;
+  /* ensure Canvas is visible */
   min-height: 420px;
   border-radius: 12px;
   overflow: hidden;
   border: 1px solid #e6ecff;
-  background: #eaf4ff;   /* splash while model loads */
+  background: #eaf4ff;
+  /* splash while model loads */
 }
 
 .content {
@@ -59,6 +70,32 @@
   border-radius: 12px;
   padding: 20px;
 }
+
 .content h1 {
   margin: 0 0 8px;
+}
+
+
+/* src/styles.css */
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  background: #000;
+}
+
+.app {
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+.sections-wrapper {
+  height: 100vh;
+  width: 100vw;
+}
+
+.section {
+  box-sizing: border-box;
 }
